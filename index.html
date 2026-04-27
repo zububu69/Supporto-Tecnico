@@ -1278,7 +1278,7 @@ function viewSelect(){
       ]),
       h("p",{class:"login-desc"},"Seleziona il tuo nome per accedere. La scelta viene ricordata su questo dispositivo."),
       h("p",{class:"login-hint"},"Operatori attivi"),
-      ...OPERATORS.map(n=>h("button",{class:"op-btn",onclick:()=>{setUser(n);loadEntries();}},[
+      ...OPERATORS.map(n=>h("button",{class:"op-btn",onclick:()=>{setUser(n);render();loadEntries(true);}},[
         h("div",{class:"avatar"},initials(n)),
         h("span",{},n),
         (function(){const s=iconSvg("chevR","arrow");s.style.width="16px";s.style.height="16px";return s;})()
