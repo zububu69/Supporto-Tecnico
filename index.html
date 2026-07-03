@@ -1031,8 +1031,13 @@ async function loadEntries(quiet=false){
       const j=await r.json();
       state.entries=Array.isArray(j)?j:[];
       state.lastError=null;
+    } else if(r.status===404){
+      // Namespace nuovo/vuoto — normale al primo avvio
+      state.entries=[];
+      state.lastError=null;
     } else {
       state.entries=[];
+      state.lastError="HTTP "+r.status;
     }
   } catch(e){
     state.lastError=e.message==="timeout"?"Timeout":"Offline";
