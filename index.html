@@ -903,41 +903,37 @@ input::placeholder,textarea::placeholder{color:var(--hint);}
 /* ── Responsive ──────────────────────── */
 @media (max-width:860px){
   .shell{grid-template-columns:1fr;}
-  .sidebar{
-    position:sticky;top:0;height:auto;z-index:10;
-    flex-direction:column;gap:0;padding:8px 10px;
-    border-right:none;border-bottom:1px solid var(--line);
-  }
-  .sidebar::after{display:none;}
-  .brand{border-bottom:none;padding:0;margin:0 0 8px 0;display:none;}
-  .brand-text{display:none;}
-  .nav-section-label,.sidebar-foot{display:none;}
-  .sidebar>.nav-section-label+.nav-item,.sidebar>button{
-    display:contents;
-  }
-  /* 3x2 grid for all 6 nav items */
-  .sidebar{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:4px;
-  }
-  .nav-item{
-    padding:8px 6px;flex-shrink:0;
-    justify-content:center;
-    font-size:11px;
-  }
-  .nav-item span:last-child{display:none;}
-  .nav-item svg{margin-right:3px;width:13px;height:13px;}
-  .nav-item.active::before{display:none;}
-  .nav-item.active::after{display:none;}
-  .nav-item.active{
-    background:var(--red-hi);
-    color:#fff;
-    border-radius:var(--radius-sm);
-  }
-  .main{padding:14px 14px 40px;}
+  /* Hide sidebar completely on mobile */
+  .sidebar{display:none!important;}
+  .main{padding:14px 14px 80px;}
   .page-title{font-size:18px;}
   .grid2{grid-template-columns:1fr;}
+}
+/* Bottom nav bar — mobile only */
+.bottom-nav{display:none;}
+@media(max-width:860px){
+  .bottom-nav{
+    display:flex;
+    position:fixed;bottom:0;left:0;right:0;
+    height:60px;z-index:200;
+    background:var(--surface);
+    border-top:1px solid var(--line);
+    box-shadow:0 -2px 12px rgba(0,0,0,0.08);
+  }
+  .bottom-nav-item{
+    flex:1;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:3px;cursor:pointer;
+    color:var(--muted);font-size:10px;
+    font-family:"JetBrains Mono",monospace;
+    letter-spacing:0.04em;
+    border:none;background:none;padding:6px 2px;
+    transition:color 0.15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .bottom-nav-item svg{width:18px;height:18px;flex-shrink:0;}
+  .bottom-nav-item.active{color:var(--red-hi);}
+  .bottom-nav-item.active svg{color:var(--red-hi);}
 }
 
 .mono{font-family:"JetBrains Mono",monospace;}
@@ -1777,6 +1773,20 @@ function render(){
 
   shell.appendChild(sidebar);
   shell.appendChild(main);
+  // Bottom nav for mobile
+  const bnav=h("nav",{class:"bottom-nav"},
+    TABS.map(t=>{
+      const btn=h("button",{
+        class:"bottom-nav-item"+(state.tab===t.id?" active":""),
+        onclick:()=>{state.tab=t.id;state.sidebarOpen=false;loadEntries(true);render();}
+      },[
+        iconSvg(t.iconKey),
+        h("span",{},t.code)
+      ]);
+      return btn;
+    })
+  );
+  app.appendChild(bnav);
   app.appendChild(shell);
 
   if(focusName||focusId){
