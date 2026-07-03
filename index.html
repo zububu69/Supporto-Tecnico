@@ -785,6 +785,7 @@ input::placeholder,textarea::placeholder{color:var(--hint);}
 }
 .login-card{
   position:relative;
+  z-index:10;
   max-width:440px;width:100%;
   background:linear-gradient(180deg,var(--surface),var(--surface-2));
   border:1px solid var(--line);
@@ -818,6 +819,9 @@ input::placeholder,textarea::placeholder{color:var(--hint);}
 .login-hint::after{content:"";flex:1;height:1px;background:var(--line-soft);}
 
 .op-btn{
+  position:relative;
+  z-index:20;
+  pointer-events:auto;
   display:flex;align-items:center;gap:12px;
   width:100%;text-align:left;
   padding:11px 14px;margin-bottom:6px;
