@@ -770,6 +770,7 @@ input::placeholder,textarea::placeholder{color:var(--hint);}
 }
 .login-wrap::before{
   content:"";position:absolute;inset:0;
+  pointer-events:none;
   background-image:
     linear-gradient(to right,oklch(0.30 0.010 260 / 0.3) 1px,transparent 1px),
     linear-gradient(to bottom,oklch(0.30 0.010 260 / 0.3) 1px,transparent 1px);
@@ -778,6 +779,7 @@ input::placeholder,textarea::placeholder{color:var(--hint);}
 }
 .login-wrap::after{
   content:"";position:absolute;inset:0;
+  pointer-events:none;
   background:
     radial-gradient(ellipse 500px 300px at 50% 30%,oklch(0.62 0.24 27 / 0.15),transparent 70%);
 }
